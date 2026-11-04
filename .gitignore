@@ -1,0 +1,22 @@
+node_modules/
+build/
+dist/
+coverage/
+.DS_Store
+*.log
+.env*
+!.env.example
+
+# Gradle & Kotlin
+.gradle/
+backend/build/
+backend/.gradle/
+out/
+*.class
+
+# Playwright
+.playwright-cli/
+
+# Local Windows PostgreSQL data cluster & logs
+database/pgdata/
+database/*.log

@@ -1,0 +1,976 @@
+@import url("https://fonts.googleapis.com/css2?family=Kalam:wght@400;700&family=Karla:wght@400;500;600;700&display=swap");
+@import "tailwindcss";
+
+:root {
+  --color-cork: #c9a879;
+  --color-cork-dark: #a5855a;
+  --color-card: #fdf8ec;
+  --color-ink: #2c2115;
+  --color-ink-soft: #5a4a34;
+  --color-pin: #b3352c;
+  --color-pin-blue: #2f5b8a;
+  --color-string: #b3352c;
+  --color-sage: #3f6b3f;
+  --color-sage-bg: #e6ead9;
+  --color-mustard: #96631c;
+  --color-mustard-bg: #f2e0bd;
+  --color-rust: #9c2f26;
+  --color-rust-bg: #f2d8d2;
+  --color-line: #c9a86a;
+
+  --font-heading: "Kalam", "Segoe Print", cursive;
+  --font-body: "Karla", -apple-system, sans-serif;
+
+  --space-xs: 0.5rem;
+  --space-sm: 1rem;
+  --space-md: 1.5rem;
+  --space-lg: 2.5rem;
+  --space-xl: 3.5rem;
+
+  --container-width: 1180px;
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+
+  /* Claymorphism + Glassmorphism tokens */
+  --clay-shadow:
+    0 12px 24px -4px rgba(44, 33, 21, 0.22),
+    inset 0 3px 6px rgba(255, 255, 255, 0.92),
+    inset 0 -4px 8px rgba(165, 133, 90, 0.25);
+
+  --clay-shadow-hover:
+    0 18px 32px -4px rgba(44, 33, 21, 0.3),
+    inset 0 4px 7px rgba(255, 255, 255, 0.96),
+    inset 0 -4px 9px rgba(165, 133, 90, 0.3);
+
+  --clay-well-shadow:
+    inset 0 3px 7px rgba(44, 33, 21, 0.16),
+    inset 0 -2px 4px rgba(255, 255, 255, 0.7);
+
+  --glass-surface: rgba(253, 248, 236, 0.72);
+  --glass-surface-strong: rgba(253, 248, 236, 0.85);
+  --glass-border: rgba(255, 255, 255, 0.62);
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  color: var(--color-ink);
+  line-height: 1.6;
+  background-color: var(--color-cork);
+  background-image:
+    radial-gradient(circle at 20% 30%, rgba(0,0,0,0.08) 0, rgba(0,0,0,0.08) 2px, transparent 2px),
+    radial-gradient(circle at 70% 60%, rgba(0,0,0,0.06) 0, rgba(0,0,0,0.06) 2px, transparent 2px),
+    radial-gradient(circle at 45% 80%, rgba(255,255,255,0.08) 0, rgba(255,255,255,0.08) 1.5px, transparent 1.5px),
+    linear-gradient(135deg, rgba(255, 248, 231, 0.14) 0%, rgba(122, 82, 48, 0.16) 100%);
+  background-size: 38px 38px, 52px 52px, 30px 30px, 100% 100%;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-heading);
+  color: var(--color-ink);
+  line-height: 1.15;
+  margin: 0 0 var(--space-sm);
+  font-weight: 700;
+  text-wrap: balance;
+}
+
+h1 { font-size: clamp(2.25rem, 4.2vw, 3.5rem); }
+h2 { font-size: clamp(1.7rem, 3vw, 2.35rem); }
+h3 { font-size: 1.25rem; }
+p { margin: 0 0 var(--space-sm); max-width: 65ch; }
+a { color: inherit; text-decoration: none; }
+ul, ol { margin: 0; padding: 0; list-style: none; }
+img { max-width: 100%; display: block; }
+button, input, select, textarea { font-family: var(--font-body); font-size: 1rem; color: inherit; }
+
+a:focus-visible, button:focus-visible, input:focus-visible,
+select:focus-visible, textarea:focus-visible {
+  outline: 3px solid var(--color-pin-blue);
+  outline-offset: 2px;
+}
+
+.container {
+  width: 100%;
+  max-width: var(--container-width);
+  margin-inline: auto;
+  padding-inline: var(--space-md);
+}
+
+.section {
+  padding-block: var(--space-xl);
+}
+
+.section-heading {
+  max-width: 640px;
+  margin-bottom: var(--space-lg);
+}
+
+.section-heading p {
+  color: var(--color-ink-soft);
+  font-size: 1.05rem;
+}
+
+.section-heading h2 {
+  display: inline-block;
+  position: relative;
+}
+
+/* ── Claymorphic + Masking-Tape Buttons ─────────────────────── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  padding: 0.65rem 1.35rem;
+  border-radius: 10px;
+  font-weight: 700;
+  font-family: var(--font-body);
+  font-size: 0.94rem;
+  border: 2px solid var(--color-ink);
+  cursor: pointer;
+  white-space: nowrap;
+  flex-shrink: 0;
+  box-shadow:
+    3px 4px 0 rgba(44, 33, 21, 0.32),
+    inset 0 2px 4px rgba(255, 255, 255, 0.45),
+    inset 0 -3px 5px rgba(0, 0, 0, 0.16);
+  transition: transform 0.14s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.14s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn:hover:not(:disabled) {
+  transform: translate(-1px, -2px);
+  box-shadow:
+    4px 6px 0 rgba(44, 33, 21, 0.38),
+    inset 0 2px 5px rgba(255, 255, 255, 0.55),
+    inset 0 -3px 5px rgba(0, 0, 0, 0.18);
+}
+
+.btn:active:not(:disabled) {
+  transform: translate(1px, 1px);
+  box-shadow: 1px 2px 0 rgba(44, 33, 21, 0.3);
+}
+
+.btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.btn-primary {
+  background: linear-gradient(145deg, #c64137, var(--color-pin));
+  color: #fff9ee;
+  border-color: var(--color-ink);
+}
+
+.btn-outline {
+  background-color: var(--color-card);
+  color: var(--color-ink);
+}
+
+.btn-glass {
+  background: var(--glass-surface);
+  backdrop-filter: blur(12px) saturate(140%);
+  -webkit-backdrop-filter: blur(12px) saturate(140%);
+  color: var(--color-ink);
+  border: 1.5px solid var(--color-ink);
+}
+
+.btn-lg { padding: 0.85rem 1.7rem; font-size: 1rem; }
+.btn-sm { padding: 0.42rem 0.9rem; font-size: 0.84rem; }
+
+/* ── Header: Wooden Top Rail + Glassmorphic Polish ───────────── */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: rgba(110, 71, 39, 0.88);
+  backdrop-filter: blur(16px) saturate(150%);
+  -webkit-backdrop-filter: blur(16px) saturate(150%);
+  border-bottom: 5px solid var(--color-ink);
+  box-shadow:
+    0 8px 20px rgba(44, 33, 21, 0.28),
+    inset 0 1px 1px rgba(255, 240, 210, 0.25);
+}
+
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  padding-block: 0.85rem;
+}
+
+.logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  font-family: var(--font-heading);
+  font-size: 1.45rem;
+  color: #fff9ee;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.logo-mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.35rem;
+  height: 2.35rem;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, #e8665c, var(--color-pin) 70%);
+  color: #fff9ee;
+  font-size: 0.88rem;
+  font-weight: 700;
+  font-family: var(--font-body);
+  border: 2px solid var(--color-ink);
+  box-shadow:
+    0 3px 6px rgba(0,0,0,0.35),
+    inset 0 2px 3px rgba(255,255,255,0.45);
+}
+
+.logo-text em {
+  font-style: normal;
+  color: #f0cf8a;
+}
+
+.main-nav .nav-list {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.nav-link {
+  font-weight: 600;
+  color: #fff9ee;
+  padding-block: 0.25rem;
+  border-bottom: 2px dashed transparent;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: border-color 0.15s ease, color 0.15s ease;
+}
+
+.nav-link:hover,
+.nav-link.active {
+  color: #f0cf8a;
+  border-bottom-color: #f0cf8a;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-shrink: 0;
+}
+
+/* ── Glassmorphic Campus Utility Bar (Student Switcher & Search) ── */
+.campus-glass-bar {
+  background: rgba(253, 248, 236, 0.58);
+  backdrop-filter: blur(14px) saturate(150%);
+  -webkit-backdrop-filter: blur(14px) saturate(150%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.55);
+  box-shadow: 0 4px 14px rgba(44, 33, 21, 0.08);
+  padding-block: 0.55rem;
+}
+
+.campus-glass-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+/* ── Glassmorphic & Claymorphic Surface Utilities ────────────── */
+.glass-panel {
+  background: var(--glass-surface);
+  backdrop-filter: blur(16px) saturate(160%);
+  -webkit-backdrop-filter: blur(16px) saturate(160%);
+  border: 1.5px solid var(--glass-border);
+  border-radius: var(--radius-md);
+  box-shadow:
+    0 12px 28px rgba(44, 33, 21, 0.16),
+    inset 0 2px 3px rgba(255, 255, 255, 0.78);
+}
+
+.clay-card {
+  background-color: var(--color-card);
+  border: 1.5px solid #e6d9b8;
+  border-radius: var(--radius-md);
+  box-shadow: var(--clay-shadow);
+  position: relative;
+}
+
+/* ── Hero ────────────────────────────────────────────────────── */
+.hero {
+  padding-block: var(--space-lg) var(--space-xl);
+}
+
+.hero-inner {
+  display: grid;
+  grid-template-columns: 1.12fr 0.88fr;
+  gap: var(--space-xl);
+  align-items: center;
+}
+
+.eyebrow {
+  display: inline-block;
+  color: var(--color-ink);
+  background: rgba(240, 207, 138, 0.88);
+  backdrop-filter: blur(6px);
+  padding: 0.25rem 0.75rem;
+  transform: rotate(-1.5deg);
+  font-weight: 700;
+  font-size: 0.88rem;
+  margin-bottom: var(--space-sm);
+  border: 1.5px dashed var(--color-ink);
+  border-radius: 4px;
+  box-shadow: 2px 3px 6px rgba(44, 33, 21, 0.14);
+}
+
+.hero-lead {
+  font-size: 1.1rem;
+  color: var(--color-ink-soft);
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+  margin-block: var(--space-md);
+}
+
+.hero-stats {
+  display: flex;
+  gap: var(--space-lg);
+  margin-top: var(--space-md);
+  padding-top: var(--space-md);
+  border-top: 2px dashed var(--color-ink);
+}
+
+.hero-stats li {
+  display: flex;
+  flex-direction: column;
+}
+
+.hero-stats strong {
+  font-family: var(--font-heading);
+  font-size: 1.55rem;
+  color: var(--color-ink);
+  font-variant-numeric: tabular-nums;
+}
+
+.hero-stats span {
+  font-size: 0.86rem;
+  color: var(--color-ink-soft);
+}
+
+.hero-panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+}
+
+/* ── Pinned Index Cards with 3D Clay Pushpins ────────────────── */
+.listing-preview-card,
+.product-card,
+.category-card,
+.step {
+  background-color: var(--color-card);
+  border: 1.5px solid #e6d9b8;
+  border-radius: var(--radius-md);
+  box-shadow: var(--clay-shadow);
+  position: relative;
+  transition: transform 0.18s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.listing-preview-card::before,
+.product-card::before,
+.category-card::before,
+.step::before {
+  content: "";
+  position: absolute;
+  top: -9px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 32% 28%, #ff8a7a, var(--color-pin) 65%, #751c16 100%);
+  box-shadow:
+    0 3px 5px rgba(0,0,0,0.45),
+    inset 0 2px 3px rgba(255,255,255,0.65);
+  z-index: 10;
+}
+
+.listing-preview-card {
+  padding: var(--space-md);
+  transform: rotate(-1.4deg);
+  cursor: pointer;
+}
+
+.listing-preview-card:hover {
+  transform: rotate(0deg) translateY(-3px);
+  box-shadow: var(--clay-shadow-hover);
+}
+
+.listing-preview-card--ghost {
+  margin-left: var(--space-lg);
+  transform: rotate(1.6deg);
+  background: rgba(253, 248, 236, 0.84);
+  backdrop-filter: blur(12px);
+}
+
+.listing-preview-card--ghost::before {
+  background: radial-gradient(circle at 32% 28%, #7cb2e8, var(--color-pin-blue) 65%, #1a3554 100%);
+}
+
+.listing-preview-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-xs);
+}
+
+.listing-price {
+  font-family: var(--font-heading);
+  font-size: 1.25rem;
+  color: var(--color-ink);
+  font-variant-numeric: tabular-nums;
+}
+
+.listing-preview-title {
+  font-weight: 700;
+  margin-bottom: 0.2rem;
+}
+
+.listing-preview-meta,
+.listing-preview-seller {
+  font-size: 0.86rem;
+  color: var(--color-ink-soft);
+  margin: 0;
+}
+
+.tag {
+  display: inline-block;
+  padding: 0.18rem 0.6rem;
+  font-size: 0.76rem;
+  font-weight: 700;
+  border-radius: 6px;
+  border: 1px solid currentColor;
+  white-space: nowrap;
+}
+
+.tag-available { background-color: var(--color-sage-bg); color: var(--color-sage); }
+.tag-pending { background-color: var(--color-mustard-bg); color: var(--color-mustard); }
+.tag-sold { background-color: var(--color-rust-bg); color: var(--color-rust); }
+
+/* ── Categories ──────────────────────────────────────────────── */
+.category-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-lg) var(--space-md);
+}
+
+.category-card {
+  padding: var(--space-md);
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  align-items: flex-start;
+  cursor: pointer;
+}
+
+.category-card:nth-child(3n+1) { transform: rotate(-1.1deg); }
+.category-card:nth-child(3n+2) { transform: rotate(0.8deg); }
+.category-card:nth-child(3n+3) { transform: rotate(-0.5deg); }
+.category-card:nth-child(even)::before {
+  background: radial-gradient(circle at 32% 28%, #7cb2e8, var(--color-pin-blue) 65%, #1a3554 100%);
+}
+
+.category-card:hover {
+  transform: scale(1.02) rotate(0deg) translateY(-3px);
+  box-shadow: var(--clay-shadow-hover);
+}
+
+.category-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.8rem;
+  height: 2.8rem;
+  border-radius: 12px;
+  background-color: #f1e6cb;
+  color: var(--color-ink);
+  box-shadow: var(--clay-well-shadow);
+  margin-bottom: 0.25rem;
+}
+
+.category-name {
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: var(--color-ink);
+}
+
+.category-count {
+  font-size: 0.85rem;
+  color: var(--color-ink-soft);
+}
+
+/* ── Product Listings ────────────────────────────────────────── */
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-lg) var(--space-md);
+  padding-top: var(--space-sm);
+}
+
+.product-card {
+  overflow: visible;
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+}
+
+.product-card:nth-child(odd) { transform: rotate(-0.9deg); }
+.product-card:nth-child(even) { transform: rotate(0.9deg); }
+.product-card:nth-child(even)::before {
+  background: radial-gradient(circle at 32% 28%, #7cb2e8, var(--color-pin-blue) 65%, #1a3554 100%);
+}
+
+.product-card:hover {
+  transform: rotate(0deg) translateY(-4px);
+  box-shadow: var(--clay-shadow-hover);
+}
+
+.product-card-media {
+  height: 175px;
+  margin: 0.65rem 0.65rem 0;
+  border-radius: 10px;
+  background-color: #f1e6cb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border-bottom: 1px dashed var(--color-line);
+  box-shadow: var(--clay-well-shadow);
+  position: relative;
+}
+
+.product-card-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.2s ease;
+}
+
+.product-card:hover .product-card-media img {
+  transform: scale(1.04);
+}
+
+.product-card-body {
+  padding: var(--space-sm) var(--space-md) var(--space-md);
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  justify-content: space-between;
+  gap: 0.35rem;
+}
+
+.product-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.25rem;
+  font-size: 0.8rem;
+  color: var(--color-ink-soft);
+}
+
+.product-price {
+  font-family: var(--font-heading);
+  color: var(--color-ink);
+  font-size: 1.25rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.product-title {
+  font-size: 1.05rem;
+  margin: 0;
+  font-weight: 700;
+  color: var(--color-ink);
+}
+
+.product-meta,
+.product-seller {
+  font-size: 0.85rem;
+  color: var(--color-ink-soft);
+  margin: 0;
+}
+
+/* ── Taped-up Ledger Sheet Table ─────────────────────────────── */
+.table-wrapper {
+  background: var(--glass-surface-strong);
+  backdrop-filter: blur(14px);
+  border: 1.5px solid #e6d9b8;
+  border-radius: var(--radius-md);
+  box-shadow: var(--clay-shadow);
+  overflow-x: auto;
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 640px;
+  font-variant-numeric: tabular-nums;
+}
+
+.data-table caption {
+  text-align: left;
+  font-family: var(--font-heading);
+  font-size: 1.2rem;
+  color: var(--color-ink);
+  padding: var(--space-sm) var(--space-md);
+  border-bottom: 2px dashed var(--color-line);
+}
+
+.data-table th,
+.data-table td {
+  padding: 0.85rem var(--space-md);
+  text-align: left;
+  border-bottom: 1px dashed var(--color-line);
+}
+
+.data-table thead th {
+  background-color: var(--color-ink);
+  color: #fdf3d8;
+  font-weight: 700;
+}
+
+.data-table tbody tr:nth-child(even) {
+  background-color: rgba(247, 239, 216, 0.65);
+}
+
+.data-table tbody tr:hover {
+  background-color: var(--color-sage-bg);
+}
+
+.data-table tfoot td {
+  font-weight: 700;
+  color: var(--color-ink);
+  border-bottom: none;
+  border-top: 2px solid var(--color-ink);
+}
+
+/* ── How It Works & Why Us ───────────────────────────────────── */
+.steps-list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-lg) var(--space-md);
+  margin-bottom: var(--space-lg);
+  padding-top: var(--space-sm);
+}
+
+.step {
+  display: flex;
+  gap: var(--space-sm);
+  padding: var(--space-md);
+}
+
+.step:nth-child(odd) { transform: rotate(-0.8deg); }
+.step:nth-child(even) { transform: rotate(0.8deg); }
+
+.step-number {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.35rem;
+  height: 2.35rem;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, #e8665c, var(--color-pin) 70%);
+  color: #fff9ee;
+  font-family: var(--font-heading);
+  font-weight: 700;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.28), inset 0 2px 3px rgba(255,255,255,0.45);
+}
+
+.step-content h3 { margin-bottom: 0.25rem; }
+.step-content p { font-size: 0.93rem; color: var(--color-ink-soft); margin: 0; }
+
+.why-us {
+  background: rgba(44, 33, 21, 0.92);
+  backdrop-filter: blur(14px);
+  color: #f6e9c9;
+  border-radius: var(--radius-md);
+  padding: var(--space-lg);
+  border: 2px dashed #f0cf8a;
+  box-shadow: 0 14px 28px rgba(44, 33, 21, 0.26);
+}
+
+.why-us h3 { color: #fff9ee; }
+.benefits-list li {
+  position: relative;
+  padding-left: 1.5rem;
+  margin-bottom: 0.6rem;
+  color: #e9dcb9;
+}
+.benefits-list li::before {
+  content: "\2713";
+  position: absolute;
+  left: 0;
+  color: #f0cf8a;
+  font-weight: 700;
+}
+
+/* ── Forms: Claymorphic Index Card ───────────────────────────── */
+.sell-inner { max-width: 780px; margin-inline: auto; }
+.product-form {
+  background-color: var(--color-card);
+  border: 1.5px solid #e6d9b8;
+  border-radius: var(--radius-md);
+  padding: var(--space-lg);
+  box-shadow: var(--clay-shadow);
+  position: relative;
+}
+
+.form-fieldset {
+  border: none;
+  padding: 0;
+  margin: 0 0 var(--space-lg);
+}
+
+.form-fieldset legend {
+  font-family: var(--font-heading);
+  font-size: 1.35rem;
+  color: var(--color-ink);
+  padding: 0;
+  margin-bottom: var(--space-sm);
+  border-bottom: 2px dashed var(--color-pin);
+  padding-bottom: 0.4rem;
+  width: 100%;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-md);
+}
+
+.form-group {
+  margin-bottom: var(--space-md);
+}
+
+.form-group label {
+  display: block;
+  font-weight: 700;
+  font-size: 0.92rem;
+  color: var(--color-ink);
+  margin-bottom: 0.35rem;
+}
+
+.form-group input[type="text"],
+.form-group input[type="number"],
+.form-group input[type="email"],
+.form-group input[type="password"],
+.form-group input[type="tel"],
+.form-group input[type="file"],
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: 0.65rem 0.85rem;
+  border: 1.5px solid var(--color-line);
+  border-bottom: 2.5px solid var(--color-ink);
+  border-radius: var(--radius-sm);
+  background-color: #fffdf7;
+  color: var(--color-ink);
+  box-shadow: inset 0 2px 4px rgba(44, 33, 21, 0.06);
+}
+
+.form-group textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-sm);
+  border-top: 2px dashed var(--color-line);
+  padding-top: var(--space-md);
+}
+
+/* ── Glassmorphic Detail Popup Overlay & Clay Card ───────────── */
+.detail-popup-overlay,
+.login-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 300;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  background: rgba(44, 33, 21, 0.58);
+  backdrop-filter: blur(10px) saturate(140%);
+  -webkit-backdrop-filter: blur(10px) saturate(140%);
+}
+
+.detail-popup-card,
+.login-card {
+  position: relative;
+  background-color: var(--color-card);
+  border: 2px solid var(--color-ink);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
+  width: 100%;
+  max-width: 680px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow:
+    8px 10px 0 rgba(44, 33, 21, 0.35),
+    inset 0 3px 6px rgba(255, 255, 255, 0.9);
+}
+
+.detail-popup-close {
+  position: absolute;
+  top: 0.85rem;
+  right: 0.95rem;
+  width: 2.2rem;
+  height: 2.2rem;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #f1e6cb;
+  border: 1.5px solid var(--color-ink);
+  font-size: 1.25rem;
+  line-height: 1;
+  color: var(--color-ink);
+  cursor: pointer;
+  transition: background-color 0.15s, color 0.15s;
+}
+
+.detail-popup-close:hover {
+  background-color: var(--color-pin);
+  color: #fff9ee;
+}
+
+.detail-popup-body {
+  border-top: 2px dashed var(--color-line);
+  padding-top: var(--space-sm);
+}
+
+.detail-popup-body .detail-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  font-size: 0.92rem;
+  color: var(--color-ink-soft);
+  margin: 0 0 0.7rem;
+  line-height: 1.45;
+}
+
+.detail-popup-body .detail-row strong {
+  font-size: 0.76rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--color-ink);
+}
+
+/* ── Footer: Wooden Base of the Board ────────────────────────── */
+.site-footer {
+  background-color: #4d3419;
+  border-top: 5px solid var(--color-ink);
+  color: #e7d9bb;
+  margin-top: auto;
+}
+
+.footer-inner {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr 1fr;
+  gap: var(--space-lg);
+  padding-block: var(--space-xl);
+}
+
+.footer-brand .logo-footer {
+  color: #fff9ee;
+  margin-bottom: var(--space-sm);
+}
+
+.footer-brand .logo-mark {
+  background: radial-gradient(circle at 30% 30%, #fff3c4, #f0cf8a 70%);
+  color: var(--color-ink);
+}
+
+.footer-brand p {
+  font-size: 0.9rem;
+  color: #cbb994;
+}
+
+.footer-links h4,
+.footer-contact h4 {
+  color: #fff9ee;
+  font-family: var(--font-heading);
+  font-size: 1.15rem;
+  margin-bottom: var(--space-sm);
+}
+
+.footer-links ul li,
+.footer-contact ul li {
+  margin-bottom: 0.6rem;
+  font-size: 0.9rem;
+  color: #cbb994;
+}
+
+.footer-links a:hover {
+  color: #f0cf8a;
+}
+
+.footer-bottom {
+  border-top: 1px dashed #6b4b26;
+}
+
+.footer-bottom-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-block: var(--space-sm);
+  font-size: 0.84rem;
+  color: #b6a37c;
+}
+
+/* ── Mobile Menu Toggle Visibility ───────────────────────────── */
+.mobile-menu-btn {
+  display: none !important;
+}
+
+/* ── Responsive Breakpoints ──────────────────────────────────── */
+@media (max-width: 900px) {
+  .main-nav { display: none !important; }
+  .mobile-menu-btn { display: inline-flex !important; }
+  .hero-inner { grid-template-columns: 1fr; gap: var(--space-lg); }
+  .listing-preview-card--ghost { margin-left: 0; }
+  .category-grid { grid-template-columns: repeat(2, 1fr); }
+  .product-grid { grid-template-columns: repeat(2, 1fr); }
+  .steps-list { grid-template-columns: 1fr; }
+  .footer-inner { grid-template-columns: 1fr 1fr; }
+}
+
+@media (max-width: 640px) {
+  .header-inner { flex-wrap: wrap; row-gap: var(--space-xs); }
+  .header-actions { margin-left: auto; }
+  .hero-actions { flex-direction: column; }
+  .hero-stats { flex-wrap: wrap; gap: var(--space-md); }
+  .category-grid { grid-template-columns: 1fr; }
+  .product-grid { grid-template-columns: 1fr; }
+  .form-row { grid-template-columns: 1fr; }
+  .footer-inner { grid-template-columns: 1fr; }
+  .footer-bottom-inner { flex-direction: column; gap: 0.3rem; text-align: center; }
+}

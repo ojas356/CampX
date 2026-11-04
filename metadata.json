@@ -1,0 +1,6 @@
+{
+  "name": "CampX — Student Marketplace",
+  "description": "An exclusive marketplace for students of A.P. Shah Institute of Technology (APSIT) to buy, sell, and connect safely on campus.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
